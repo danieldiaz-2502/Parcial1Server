@@ -36,7 +36,7 @@ public class Server extends Thread{
 
 					Gson gson = new Gson();
 					
-					Mensaje mensajeEnviado = gson.fromJson(mensajeRecibido, Mensaje.class);
+					Recordatorio mensajeEnviado = gson.fromJson(mensajeRecibido, Recordatorio.class);
 					ref.addMensaje(mensajeEnviado);
 				}
 
