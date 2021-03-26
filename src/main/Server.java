@@ -37,7 +37,13 @@ public class Server extends Thread{
 					Gson gson = new Gson();
 					
 					Recordatorio mensajeEnviado = gson.fromJson(mensajeRecibido, Recordatorio.class);
-					ref.addMensaje(mensajeEnviado);
+					//para diferenciar cuando el usuario mando vista o confirmacion
+					if(mensajeEnviado.getConfirmacion().contentEquals("vista")) {
+					ref.addVista(mensajeEnviado);
+					}
+					if(mensajeEnviado.getConfirmacion().contentEquals("confirmar")) {
+						ref.addMensaje(mensajeEnviado);
+						}
 				}
 
 			} catch (IOException e) {

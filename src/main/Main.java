@@ -24,16 +24,16 @@ public class Main extends PApplet {
 	}
 
 	public void setup() {
-
+		//aquí se hace la conexion con el cliente
 		conexion = new Server();
 		conexion.setMain(this);
 		conexion.start();
-		
+		//un arreglo para los mensajes que agrega el usuario con "confirmar"
 		userMensajes = new ArrayList<Recordatorio>();
 		
 		}
 
-	public void addMensaje(Recordatorio mensajeEnviado) {
+	public void addVista(Recordatorio mensajeEnviado) {
 		
 		System.out.println(mensajeEnviado.getMensaje());
 
@@ -42,20 +42,34 @@ public class Main extends PApplet {
 		mensaje = mensajeEnviado.getMensaje();
 		importancia = mensajeEnviado.getImportancia();
 		confirmacion = mensajeEnviado.getConfirmacion();
-		if(confirmacion == "confirmar") {
-		userMensajes.add(new Recordatorio(posX,posY,mensaje,importancia,confirmacion));
-		llegoMensaje= true;
-		}
 		if(confirmacion == "vista") {
-			llegoMensaje = false;
+			llegoMensajeView = false;
 		}
 		llegoMensajeView = true;
+
+	}
+ public void addMensaje(Recordatorio mensajeEnviado) {
+		
+		System.out.println(mensajeEnviado.getMensaje());
+
+		posX = mensajeEnviado.getPosx();
+		posY = mensajeEnviado.getPosy();
+		mensaje = mensajeEnviado.getMensaje();
+		importancia = mensajeEnviado.getImportancia();
+		confirmacion = mensajeEnviado.getConfirmacion();
+		//aqui se agrega un mensaje cada que el usuario oprima confirmar
+		userMensajes.add(new Recordatorio(posX,posY,mensaje,importancia,confirmacion));
+		if(confirmacion == "confirmar") {
+			llegoMensaje = false;
+		}
+		llegoMensaje = true;
 
 	}
 
 	public void draw() {
 
 		background(255, 255, 255);
+		//esto es en caso de que el string recibido sea "vista"
 		if(llegoMensajeView == true) {
 			switch(importancia) {
 			case "verde":
@@ -78,14 +92,15 @@ public class Main extends PApplet {
 				break;
 			}
 		}
+		//este es en caso de que el string recibido sea "confirmar"
+		if(llegoMensaje == true) {
 			for (int i = 0; i < userMensajes.size(); i++) {
-				
 				//i = userMensajes[i];
 				posX = userMensajes.get(i).getPosx();
 				posY = userMensajes.get(i).getPosy();
 				mensaje = userMensajes.get(i).getMensaje();
 				importancia = userMensajes.get(i).getImportancia();
-				
+				//aquí se diferencia el color que oprimió el usuario para su recordatorio
 				switch(importancia) {
 				case "verde":
 					fill(0,255,0);
@@ -106,6 +121,7 @@ public class Main extends PApplet {
 					text(mensaje,posX-20,posY+20);
 					break;
 				}
+			}
 	}
 	}
 }
