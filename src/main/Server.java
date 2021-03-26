@@ -33,7 +33,9 @@ public class Server extends Thread{
 					System.out.println("Esperando mensaje...");
 					String mensajeRecibido = breader.readLine();
 					System.out.println(mensajeRecibido);
-
+					
+					//se hace la deserializacion del mensaje recibido
+					
 					Gson gson = new Gson();
 					
 					Recordatorio mensajeEnviado = gson.fromJson(mensajeRecibido, Recordatorio.class);
