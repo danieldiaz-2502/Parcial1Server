@@ -10,6 +10,7 @@ public class Main extends PApplet {
 	ArrayList<Recordatorio> userMensajes;
 	private Server conexion;
 	boolean llegoMensaje;
+	boolean llegoMensajeView;
 	Recordatorio reco;
 	PApplet app;
 
@@ -45,38 +46,64 @@ public class Main extends PApplet {
 		userMensajes.add(new Recordatorio(posX,posY,mensaje,importancia,confirmacion));
 		llegoMensaje= true;
 		}
+		if(confirmacion == "vista") {
+			llegoMensaje = false;
+		}
+		llegoMensajeView = true;
 
 	}
 
 	public void draw() {
 
 		background(255, 255, 255);
+		if(llegoMensajeView == true) {
+			switch(importancia) {
+			case "verde":
+				fill(0,255,0);
+				ellipse(posX,posY,20,20);
+				fill(0,0,0);
+				text(mensaje,posX-20,posY+20);
+				break;
+			case "amarillo":
+				fill(255,255,0);
+				ellipse(posX,posY,20,20);
+				fill(0,0,0);
+				text(mensaje,posX-20,posY+20);
+				break;
+			case "rojo":
+				fill(255,0,0);
+				ellipse(posX,posY,20,20);
+				fill(0,0,0);
+				text(mensaje,posX-20,posY+20);
+				break;
+			}
+		}
 			for (int i = 0; i < userMensajes.size(); i++) {
 				
 				//i = userMensajes[i];
-				int posicionx = userMensajes.get(i).getPosx();
-				int posiciony = userMensajes.get(i).getPosy();
-				String mensaje = userMensajes.get(i).getMensaje();
-				String importancia = userMensajes.get(i).getImportancia();
+				posX = userMensajes.get(i).getPosx();
+				posY = userMensajes.get(i).getPosy();
+				mensaje = userMensajes.get(i).getMensaje();
+				importancia = userMensajes.get(i).getImportancia();
 				
 				switch(importancia) {
 				case "verde":
 					fill(0,255,0);
-					ellipse(posicionx,posiciony,20,20);
+					ellipse(posX,posY,20,20);
 					fill(0,0,0);
-					text(mensaje,posicionx-20,posiciony+20);
+					text(mensaje,posX-20,posY+20);
 					break;
 				case "amarillo":
 					fill(255,255,0);
-					ellipse(posicionx,posiciony,20,20);
+					ellipse(posX,posY,20,20);
 					fill(0,0,0);
-					text(mensaje,posicionx-20,posiciony+20);
+					text(mensaje,posX-20,posY+20);
 					break;
 				case "rojo":
 					fill(255,0,0);
-					ellipse(posicionx,posiciony,20,20);
+					ellipse(posX,posY,20,20);
 					fill(0,0,0);
-					text(mensaje,posicionx-20,posiciony+20);
+					text(mensaje,posX-20,posY+20);
 					break;
 				}
 	}
