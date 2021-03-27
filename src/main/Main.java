@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import processing.core.PApplet;
 
 public class Main extends PApplet {
-	int posX, posY;
-	String importancia, mensaje, confirmacion;
+	int posX = -1000, posY = -1000;
+	String importancia = "verde", mensaje= "hola", confirmacion="vista";
 	ArrayList<Recordatorio> userMensajes;
 	private Server conexion;
 	boolean llegoMensaje;
@@ -42,10 +42,12 @@ public class Main extends PApplet {
 		mensaje = mensajeEnviado.getMensaje();
 		importancia = mensajeEnviado.getImportancia();
 		confirmacion = mensajeEnviado.getConfirmacion();
-		if(confirmacion == "vista") {
+		/*if(confirmacion == "vista") {
 			llegoMensajeView = false;
-		}
+			System.out.println("holi");
+		}*/
 		llegoMensajeView = true;
+		System.out.println(confirmacion);
 
 	}
  public void addMensaje(Recordatorio mensajeEnviado) {
@@ -59,10 +61,8 @@ public class Main extends PApplet {
 		confirmacion = mensajeEnviado.getConfirmacion();
 		//aqui se agrega un mensaje cada que el usuario oprima confirmar
 		userMensajes.add(new Recordatorio(posX,posY,mensaje,importancia,confirmacion));
-		if(confirmacion == "confirmar") {
-			llegoMensaje = false;
-		}
 		llegoMensaje = true;
+		System.out.println(confirmacion);
 
 	}
 
@@ -71,6 +71,7 @@ public class Main extends PApplet {
 		background(255, 255, 255);
 		//esto es en caso de que el string recibido sea "vista"
 		if(llegoMensajeView == true) {
+			
 			switch(importancia) {
 			case "verde":
 				fill(0,255,0);
@@ -92,36 +93,37 @@ public class Main extends PApplet {
 				break;
 			}
 		}
-		//este es en caso de que el string recibido sea "confirmar"
-		if(llegoMensaje == true) {
-			for (int i = 0; i < userMensajes.size(); i++) {
-				//i = userMensajes[i];
-				posX = userMensajes.get(i).getPosx();
-				posY = userMensajes.get(i).getPosy();
-				mensaje = userMensajes.get(i).getMensaje();
-				importancia = userMensajes.get(i).getImportancia();
-				//aquí se diferencia el color que oprimió el usuario para su recordatorio
-				switch(importancia) {
-				case "verde":
-					fill(0,255,0);
-					ellipse(posX,posY,20,20);
-					fill(0,0,0);
-					text(mensaje,posX-20,posY+20);
-					break;
-				case "amarillo":
-					fill(255,255,0);
-					ellipse(posX,posY,20,20);
-					fill(0,0,0);
-					text(mensaje,posX-20,posY+20);
-					break;
-				case "rojo":
-					fill(255,0,0);
-					ellipse(posX,posY,20,20);
-					fill(0,0,0);
-					text(mensaje,posX-20,posY+20);
-					break;
+			
+			//este es en caso de que el string recibido sea "confirmar"
+			if(llegoMensaje == true) {
+				for (int i = 0; i < userMensajes.size(); i++) {
+					//i = userMensajes[i];
+					posX = userMensajes.get(i).getPosx();
+					posY = userMensajes.get(i).getPosy();
+					mensaje = userMensajes.get(i).getMensaje();
+					importancia = userMensajes.get(i).getImportancia();
+					//aquí se diferencia el color que oprimió el usuario para su recordatorio
+					switch(importancia) {
+					case "verde":
+						fill(0,255,0);
+						ellipse(posX,posY,20,20);
+						fill(0,0,0);
+						text(mensaje,posX-20,posY+20);
+						break;
+					case "amarillo":
+						fill(255,255,0);
+						ellipse(posX,posY,20,20);
+						fill(0,0,0);
+						text(mensaje,posX-20,posY+20);
+						break;
+					case "rojo":
+						fill(255,0,0);
+						ellipse(posX,posY,20,20);
+						fill(0,0,0);
+						text(mensaje,posX-20,posY+20);
+						break;
+					}
 				}
-			}
-	}
+		}
 	}
 }

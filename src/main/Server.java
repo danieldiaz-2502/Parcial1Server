@@ -45,7 +45,7 @@ public class Server extends Thread{
 					}
 					if(mensajeEnviado.getConfirmacion().contentEquals("confirmar")) {
 						ref.addMensaje(mensajeEnviado);
-						}
+					}
 				}
 
 			} catch (IOException e) {
